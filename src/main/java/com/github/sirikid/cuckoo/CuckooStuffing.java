@@ -4,25 +4,33 @@ import java.util.Arrays;
 
 public class CuckooStuffing {
 	public static byte[] stuff(byte[] in) {
-		return new Stuffer().stuff(in);
+		return stuff(in, 0, in.length);
+	}
+
+	public static byte[] stuff(byte[] in, int from, int to) {
+		return new Stuffer().stuff(in, from, to);
 	}
 
 	public static byte[] unstuff(byte[] in) {
-		return new Unstuffer().unstuff(in);
+		return unstuff(in, 0, in.length);
+	}
+
+	public static byte[] unstuff(byte[] in, int from, int to) {
+		return new Unstuffer().unstuff(in, from, to);
 	}
 
 	private static class Stuffer {
 		private final EscapeCodeGenerator generator = new EscapeCodeGenerator();
 
-		private byte[] stuff(byte[] in) {
+		private byte[] stuff(byte[] in, int from, int to) {
 			byte[] out = new byte[in.length * 2];
 
 			int j = 0;
-			for (int i = 0; i < in.length; i++) {
+			for (int i = from; i < to; i++) {
 				j += stuffByte(in, i, out, j);
 			}
 
-			return Arrays.copyOf(out, j);
+			return Arrays.copyOf(out, j - from);
 		}
 
 		private int stuffByte(byte[] in, int i, byte[] out, int j) {
@@ -62,15 +70,15 @@ public class CuckooStuffing {
 	private static class Unstuffer {
 		private final EscapeCodeGenerator generator = new EscapeCodeGenerator();
 
-		private byte[] unstuff(byte[] in) {
+		private byte[] unstuff(byte[] in, int from, int to) {
 			byte[] out = new byte[in.length];
 
 			int j = 0;
-			for (int i = 0; i < in.length; j++) {
+			for (int i = from; i < to; j++) {
 				i += unstuffByte(in, i, out, j);
 			}
 
-			return Arrays.copyOf(out, j);
+			return Arrays.copyOf(out, j - from);
 		}
 
 		private int unstuffByte(byte[] in, int i, byte[] out, int j) {
