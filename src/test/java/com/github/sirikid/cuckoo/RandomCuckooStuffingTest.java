@@ -5,6 +5,8 @@
 
 package com.github.sirikid.cuckoo;
 
+import java.util.Random;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -16,38 +18,42 @@ import static com.github.sirikid.cuckoo.CuckooStuffing.unstuff;
 import static org.junit.Assert.assertArrayEquals;
 
 @RunWith(Parameterized.class)
-public class CuckooStuffingTest {
-	@Parameter(0) public byte[] source;
-	@Parameter(1) public byte[] stuffed;
+public class RandomCuckooStuffingTest {
+	@Parameter public int sourceLength;
+	private final Random random = new Random();
 
 	@Parameters
-	public static Object[][] parameters() throws Exception {
-		return CuckooExamples.getTestParameters();
-	}
-
-	@Test
-	public void stuffTest() {
-		assertArrayEquals(stuffed, stuff(source));
-	}
-
-	@Test
-	public void unstuffTest() {
-		assertArrayEquals(source, unstuff(stuffed));
+	public static Object[][] parameters() {
+		return new Object[][]{
+			{0},
+			{1 << 0},
+			{1 << 1},
+			{1 << 2},
+			{1 << 3},
+			{1 << 4},
+			{1 << 5},
+			{1 << 6},
+			{1 << 7},
+			{1 << 8},
+			{1 << 9},
+			{1 << 10},
+			{1 << 11},
+			{1 << 12},
+			{1 << 13},
+			{1 << 14},
+			{1 << 15},
+			{1 << 16},
+			{1 << 17},
+			{1 << 18},
+			{1 << 19},
+			{1 << 20},
+		};
 	}
 
 	@Test
 	public void transitivityTest() {
+		byte[] source = new byte[sourceLength];
+		random.nextBytes(source);
 		assertArrayEquals(source, unstuff(stuff(source)));
-		assertArrayEquals(stuffed, stuff(unstuff(stuffed)));
-	}
-
-	@Test
-	public void stuffTest2() {
-		assertArrayEquals(stuff(source), stuff(source, 0, source.length));
-	}
-
-	@Test
-	public void unstuffTest2() {
-		assertArrayEquals(unstuff(stuffed), unstuff(stuffed, 0, stuffed.length));
 	}
 }

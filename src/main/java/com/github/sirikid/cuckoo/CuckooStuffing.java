@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2016, Ivan Sokolov. All rights reserved.
+ * This code is licensed under BSD 2-clause license (see LICENSE for details)
+ */
+
 package com.github.sirikid.cuckoo;
 
 import java.util.Arrays;
