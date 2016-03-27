@@ -109,7 +109,8 @@ public class CuckooStuffing {
 					return 2;
 				} else {
 					out[j] = generator.getEscape2();
-					return 1;
+					out[j+1] = in[i+1];
+					return 2;
 				}
 			}
 
