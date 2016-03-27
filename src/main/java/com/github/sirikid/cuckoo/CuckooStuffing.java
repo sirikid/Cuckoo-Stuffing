@@ -58,7 +58,9 @@ public class CuckooStuffing {
 
 			if (in[i] == generator.getEscape2()) {
 				out[j] = generator.getEscape2();
-				if ((in[i + 1] != 0) && (in[i + 1] != generator.getEscape1()) && (in[i + 1] != generator.getEscape2())) {
+				if ((i + 1 < in.length) && (in[i + 1] != 0)
+				        && (in[i + 1] != generator.getEscape1())
+				        && (in[i + 1] != generator.getEscape2())) {
 					out[j + 1] = in[i + 1];
 				} else {
 					out[j + 1] = generator.getEscape2();
@@ -109,7 +111,7 @@ public class CuckooStuffing {
 					return 2;
 				} else {
 					out[j] = generator.getEscape2();
-					out[j+1] = in[i+1];
+					out[j + 1] = in[i + 1];
 					return 2;
 				}
 			}
