@@ -9,12 +9,21 @@ class EscapeCodeGenerator {
 	public static final byte DEFAULT_ESCAPE1 = (byte) 0xC1;
 	public static final byte DEFAULT_ESCAPE2 = (byte) 0xF8;
 
-	private byte x = 21;
-	private byte y = (byte) 229;
-	private byte z = (byte) 181;
-	private byte w = 51;
-	private byte escape1 = DEFAULT_ESCAPE1;
-	private byte escape2 = DEFAULT_ESCAPE2;
+	private byte x, y, z, w;
+	private byte escape1, escape2;
+
+	public EscapeCodeGenerator() {
+		this(DEFAULT_ESCAPE1, DEFAULT_ESCAPE2);
+	}
+
+	public EscapeCodeGenerator(byte escape1, byte escape2) {
+		x = 21;
+		y = (byte) 229;
+		z = (byte) 181;
+		w = 51;
+		this.escape1 = escape1;
+		this.escape2 = escape2;
+	}
 
 	private byte nextEscape(byte verboten) {
 		do {

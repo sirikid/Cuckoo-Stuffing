@@ -5,8 +5,16 @@
 
 package com.github.sirikid.cuckoo;
 
-class CuckooExamples {
-	static Object[][] getTestParameters() throws Exception {
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+class CuckooParameters {
+	static final int MAX_POWER = 20;
+	static final int MAX_SAVED_CASES = 1024;
+	static final Path SAVED_CASES_PATH = Paths.get("src/test/resources/bad-seeds.tsv");
+
+
+	static Object[][] getTestStrings() throws Exception {
 		return new Object[][]{
 			{
 				new byte[0],

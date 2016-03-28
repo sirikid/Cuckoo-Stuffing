@@ -17,37 +17,37 @@ import static org.junit.Assert.assertArrayEquals;
 
 @RunWith(Parameterized.class)
 public class CuckooStuffingTest {
-	@Parameter(0) public byte[] source;
-	@Parameter(1) public byte[] stuffed;
+	@Parameter(0) public byte[] bytes;
+	@Parameter(1) public byte[] bytes2;
 
 	@Parameters
 	public static Object[][] parameters() throws Exception {
-		return CuckooExamples.getTestParameters();
+		return CuckooParameters.getTestStrings();
 	}
 
 	@Test
 	public void stuffTest() {
-		assertArrayEquals(stuffed, stuff(source));
+		assertArrayEquals(bytes2, stuff(bytes));
 	}
 
 	@Test
 	public void unstuffTest() {
-		assertArrayEquals(source, unstuff(stuffed));
+		assertArrayEquals(bytes, unstuff(bytes2));
 	}
 
 	@Test
 	public void transitivityTest() {
-		assertArrayEquals(source, unstuff(stuff(source)));
-		assertArrayEquals(stuffed, stuff(unstuff(stuffed)));
+		assertArrayEquals(bytes, unstuff(stuff(bytes)));
+		assertArrayEquals(bytes2, stuff(unstuff(bytes2)));
 	}
 
 	@Test
-	public void stuffTest2() {
-		assertArrayEquals(stuff(source), stuff(source, 0, source.length));
+	public void stuffDefaultParametersTest() {
+		assertArrayEquals(stuff(bytes), stuff(bytes, 0, bytes.length));
 	}
 
 	@Test
-	public void unstuffTest2() {
-		assertArrayEquals(unstuff(stuffed), unstuff(stuffed, 0, stuffed.length));
+	public void unstuffDefaultParametersTest() {
+		assertArrayEquals(unstuff(bytes2), unstuff(bytes2, 0, bytes2.length));
 	}
 }
