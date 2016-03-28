@@ -10,7 +10,10 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
@@ -29,6 +32,7 @@ public class RandomCuckooStuffingTest {
 
 		// Reed all
 		List<String> lines = Files.readAllLines(SAVED_CASES_PATH, StandardCharsets.UTF_8);
+		if (TSV_HEADER.equals(lines.get(0))) lines = lines.subList(1, lines.size());
 		trickyCases = new ArrayDeque<>(MAX_SAVED_CASES);
 		trickyCases.addAll(lines);
 
@@ -72,6 +76,8 @@ public class RandomCuckooStuffingTest {
 			long seed = (System.nanoTime() << 32) ^ System.nanoTime();
 			parameters.add(i, new Object[]{length, seed});
 		}
+
+		parameters.add(new Object[]{0, (System.nanoTime() << 32) ^ System.nanoTime()});
 
 		return parameters;
 	}
@@ -121,6 +127,7 @@ public class RandomCuckooStuffingTest {
 	@AfterClass
 	public static void saveTrickyCases() throws IOException {
 		try (Writer writer = Files.newBufferedWriter(SAVED_CASES_PATH, StandardCharsets.UTF_8)) {
+			writer.append(TSV_HEADER).append('\n');
 			for (String line : trickyCases) {
 				writer.append(line).append('\n');
 			}

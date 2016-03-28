@@ -12,7 +12,7 @@ class CuckooParameters {
 	static final int MAX_POWER = 20;
 	static final int MAX_SAVED_CASES = 1024;
 	static final Path SAVED_CASES_PATH = Paths.get("src/test/resources/bad-seeds.tsv");
-
+	static final String TSV_HEADER = "Length\tSeed\tDescription";
 
 	static Object[][] getTestStrings() throws Exception {
 		return new Object[][]{
